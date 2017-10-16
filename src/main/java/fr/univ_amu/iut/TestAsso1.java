@@ -29,13 +29,19 @@ public class TestAsso1 {
             // Execution de la requete
             System.out.println("Execution de la requete : " + reqProfs);
             ResultSet rset = stmt.executeQuery(reqProfs);
-            ArrayList<Prof> profs = new ArrayList<Prof>();
-
+            ArrayList<Prof> myList = new ArrayList<>();
             while (rset.next()){
-                profs.add(creerProf(rset));
+                Prof p = new Prof();
+                p.setNumProf(rset.getInt("NUM_PROF"));
+                p.setNomProf(rset.getString("NOM_PROF"));
+                p.setPrenomProf(rset.getString("PRENOM_PROF"));
+                Module spec = new Module();
+                spec.setCode(rset.getString("MAT_SPEC"));
+                p.setMatSpec(spec);
+                myList.add(p);
             }
-            System.out.println(profs);
-
+            for (int i = 0 ; i != myList.size() ; ++i)
+                System.out.println(myList.get(i).toString());
             // Fermeture de l'instruction (liberation des ressources)
             stmt.close();
             System.out.println("\nOk.\n");
@@ -45,7 +51,7 @@ public class TestAsso1 {
         }
     }
 
-    private static Prof creerProf(ResultSet rset) throws SQLException {
+ /*   private static Prof creerProf(ResultSet rset) throws SQLException {
         Prof prof = new Prof();
         prof.setNumProf(rset.getInt("NUM_PROF") );
         prof.setNomProf(rset.getString("NOM_PROF"));
@@ -77,5 +83,5 @@ public class TestAsso1 {
 
 
         return module;
-    }
+    }*/
 }
