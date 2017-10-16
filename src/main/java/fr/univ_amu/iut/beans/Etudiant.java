@@ -36,7 +36,7 @@ public class Etudiant {
 		return groupe;
 	}
 
-	public String getNomEt(String nom_et) {
+	public String getNomEt() {
 		return nomEt;
 	}
 
@@ -44,7 +44,7 @@ public class Etudiant {
 		return numEt;
 	}
 
-	public String getPrenomEt(String prenom_et) {
+	public String getPrenomEt() {
 		return prenomEt;
 	}
 

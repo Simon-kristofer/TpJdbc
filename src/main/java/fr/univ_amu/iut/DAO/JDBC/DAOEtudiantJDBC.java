@@ -121,13 +121,28 @@ public class DAOEtudiantJDBC implements DAOEtudiant {
 
     @Override
     public Etudiant insert(Etudiant obj) {
-        String req ="INSERT INTO ETUDIANT(NOM_ET,NUM_ET,PRENOM_ET VALUE(";
+        String req ="INSERT INTO ETUDIANT(NOM_ET,NUM_ET,PRENOM_ET) VALUE("+obj.getNomEt()+","+obj.getNumEt()+","+obj.getPrenomEt()+")";
+        try (Connection conn = ConnexionUnique.getInstance().getConnection()) {
+            Statement stmt = conn.createStatement();
+            ResultSet rset = stmt.executeQuery(req);
+
+            return obj;
+        }catch (SQLException e) {
+            e.printStackTrace();
+        } return null;
 
     }
 
     @Override
     public boolean update(Etudiant obj) {
 
-        String req ="UPDATE ETUDIANT SET";
+        String req ="UPDATE ETUDIANT SET NUM_ET="+obj.getNumEt()+"PRENOM_ET="+obj.getPrenomEt()+"NOM_ET"+obj.getNomEt();
+        try (Connection conn = ConnexionUnique.getInstance().getConnection()) {
+            Statement stmt = conn.createStatement();
+            ResultSet rset = stmt.executeQuery(req);
+            return true;
+        }catch (SQLException e) {
+            e.printStackTrace();
+        } return false;
     }
 }
