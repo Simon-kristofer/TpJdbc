@@ -116,7 +116,19 @@ public class DAOEtudiantJDBC implements DAOEtudiant {
 
     @Override
     public Etudiant getById(int id) {
-        String req ="INSERT INTO ETUDIANT(NOM_ET,NUM_ET,PRENOM_ET VALUE(";
+        String req ="SELECT* FROM ETUDIANT WHERE NUM_ET="+id;
+        try (Connection conn = ConnexionUnique.getInstance().getConnection()) {
+            Statement stmt = conn.createStatement();
+            ResultSet rset = stmt.executeQuery(req);
+            Etudiant etudiant =new Etudiant();
+            etudiant.setNomEt(rset.getNString("NOM_ET"));
+            etudiant.setNumEt(rset.getInt("NUM_ET"));
+            etudiant.setPrenomEt(rset.getString("PRENOM_ET"));
+            return etudiant;
+        }catch (SQLException e) {
+            e.printStackTrace();
+        } return null;
+
     }
 
     @Override
@@ -125,8 +137,11 @@ public class DAOEtudiantJDBC implements DAOEtudiant {
         try (Connection conn = ConnexionUnique.getInstance().getConnection()) {
             Statement stmt = conn.createStatement();
             ResultSet rset = stmt.executeQuery(req);
-
-            return obj;
+            Etudiant etudiant =new Etudiant();
+            etudiant.setNomEt(rset.getNString("NOM_ET"));
+            etudiant.setNumEt(rset.getInt("NUM_ET"));
+            etudiant.setPrenomEt(rset.getString("PRENOM_ET"));
+            return etudiant;
         }catch (SQLException e) {
             e.printStackTrace();
         } return null;

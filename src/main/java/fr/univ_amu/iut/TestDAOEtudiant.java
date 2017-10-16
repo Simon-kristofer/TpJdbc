@@ -1,5 +1,6 @@
 package fr.univ_amu.iut;
 
+import fr.univ_amu.iut.DAO.DAOEtudiant;
 import fr.univ_amu.iut.beans.Etudiant;
 
 import java.sql.Connection;
@@ -26,6 +27,8 @@ public class TestDAOEtudiant {
             // Execution de la requete
             System.out.println("Execution de la requete : " + req );
             ResultSet rset = stmt.executeQuery(req);
+
+            DAOEtudiant langadeDAO;
             // Affichage du resultat
             ArrayList<Etudiant> et = new ArrayList<Etudiant>();
             while (rset.next()){
