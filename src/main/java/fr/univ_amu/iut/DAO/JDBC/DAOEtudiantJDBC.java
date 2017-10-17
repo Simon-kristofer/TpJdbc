@@ -14,8 +14,18 @@ import java.util.List;
 public class DAOEtudiantJDBC implements DAOEtudiant {
     @Override
     public int computeNbEtudiant() {
+        String req ="SELECT COUNT(*) FROM ETUDIANT";
+        try (Connection conn = ConnexionUnique.getInstance().getConnection()) {
+            Statement stmt=conn.createStatement();
+            ResultSet rset=stmt.executeQuery(req);
+            return rset.getInt(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return 0;
     }
+
 
     @Override
     public List<Etudiant> findByAnnee(int annee) {

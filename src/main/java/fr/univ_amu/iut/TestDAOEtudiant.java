@@ -1,6 +1,8 @@
 package fr.univ_amu.iut;
 
+import fr.univ_amu.iut.DAO.DAO;
 import fr.univ_amu.iut.DAO.DAOEtudiant;
+import fr.univ_amu.iut.DAO.JDBC.DAOEtudiantJDBC;
 import fr.univ_amu.iut.beans.Etudiant;
 
 import java.sql.Connection;
@@ -13,13 +15,20 @@ import java.util.ArrayList;
  * Created by s16011665 on 16/10/17.
  */
 public class TestDAOEtudiant {
-    static final String req = "SELECT * " +
-            "FROM ETUDIANT " +
-            "WHERE VILLE_ET = 'AIX-EN-PROVENCE'";
+
 
     public static void main(String[] args) throws SQLException {
+        DAO<Etudiant> etudiantDAO=new DAOEtudiantJDBC();
+        ArrayList<Etudiant> et = new ArrayList<Etudiant>();
+
+        et.addAll(etudiantDAO.FindAll());
+
+
+
+
+
         // Connexion a la base
-        System.out.println("Connexion");
+       /* System.out.println("Connexion");
         try (Connection conn = ConnexionUnique.getInstance().getConnection()){
             System.out.println("Connecte\n");
             // Creation d'une instruction SQL
@@ -28,7 +37,6 @@ public class TestDAOEtudiant {
             System.out.println("Execution de la requete : " + req );
             ResultSet rset = stmt.executeQuery(req);
 
-            DAOEtudiant langadeDAO;
             // Affichage du resultat
             ArrayList<Etudiant> et = new ArrayList<Etudiant>();
             while (rset.next()){
@@ -43,7 +51,7 @@ public class TestDAOEtudiant {
         } catch (SQLException e) {
             e.printStackTrace();// Arggg!!!
             System.out.println(e.getMessage() + "\n");
-        }
+        }*/
     }
 
 
@@ -56,4 +64,20 @@ public class TestDAOEtudiant {
         etudiant.setCpEt(rset.getString("CP_ET"));
         etudiant.setGroupe(rset.getInt("GROUPE"));
     }
+
+    public int computeNbEtudiant() {
+        String req ="SELECT COUNT(*) FROM ETUDIANT";
+        try (Connection conn = ConnexionUnique.getInstance().getConnection()) {
+            Statement stmt=conn.createStatement();
+            ResultSet rset=stmt.executeQuery(req);
+            return rset.getInt(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+
+
 }
